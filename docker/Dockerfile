@@ -86,6 +86,13 @@ RUN searchsploit -u || true && \
 
 RUN npm install -g supergateway
 
+# --- Patch mcp-kali-server: fix CommandExecutor to accept list commands ---
+# The apt-packaged server.py only accepted string commands, but every tool
+# endpoint (/api/tools/nmap, /health, ...) passes command lists, causing 500s
+# and tools_status=false. This vendored copy supports both str (shell) and
+# list (safe, no shell). Remove this COPY once a fixed package is released.
+COPY server.py /usr/share/mcp-kali-server/server.py
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

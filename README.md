@@ -416,6 +416,7 @@ kali-mcp/
 | Port 666 already in use | Change the host port in `docker/compose.yml` (`"<new-port>:8000"`) and update `.mcp.json`. |
 | Image build fails | Ensure internet access. Kali repos may be temporarily unavailable — retry. |
 | Tools timeout on large scans | Some scans take minutes. Add resource limits in `compose.yml` if needed. |
+| Tool wrappers (`nmap_scan`, `nikto_scan`, …) return `500` / `server_health` shows tools as unavailable | Fixed in this repo: the upstream `mcp-kali-server` `CommandExecutor` rejected list commands. A patched `docker/server.py` is copied over it in the Dockerfile. See [`docs/fix-commandexecutor.md`](docs/fix-commandexecutor.md). Rebuild with `./init.sh`. |
 
 ## Disclaimer
 

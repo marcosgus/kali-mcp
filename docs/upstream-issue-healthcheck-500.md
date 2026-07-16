@@ -32,9 +32,26 @@ execute_command: nmap -sV -sC -Pn <target>   # succeeds
 
 `server_health` returns `status: healthy` but reports
 `all_essential_tools_available: false` with `nmap/nikto/gobuster/dirb: false`,
-even though those binaries exist and run. This strongly suggests the wrappers
-gate execution on a tool-availability/health check that is producing a false
-negative (and then 500-ing) rather than on whether the binary actually runs.
+even though those binaries exist and run.
+
+## Confirmed root cause
+
+`CommandExecutor.execute()` only accepts **string** commands and raises
+`ValueError("CommandExecutor expects a string, but got list")` for anything
+else. Every tool wrapper and `/health` build the command as a **list**
+(e.g. `["nmap", ...]`, `["which", tool]`) and pass it to `execute_command()`,
+so each call raises and the endpoint returns 500. The `/health` `["which", tool]`
+calls fail the same way, which is why `tools_status` is `false` despite the
+binaries being installed (`which nmap` and `shutil.which("nmap")` both resolve).
+
+The `execute_command` docstring already promises *"list for safe mode, string
+for shell mode"*, so this is a regression: the list branch is missing (the
+leftover `cmd_args = shlex.split(self.command)` line is never used).
+
+**Fix:** make `execute_command`/`CommandExecutor.execute()` accept lists too
+(`subprocess.Popen(cmd, shell=False)` for lists). See
+[`docs/fix-commandexecutor.md`](fix-commandexecutor.md) for the full patch and
+verification.
 
 **Impact**
 All specialized wrappers are unusable; consumers must route everything through
@@ -42,17 +59,17 @@ All specialized wrappers are unusable; consumers must route everything through
 structured output they were meant to provide.
 
 **Expected**
-- The health/availability check should detect installed tools correctly (e.g.
-  resolve via `$PATH`/`shutil.which`), OR
-- Wrapper endpoints should not hard-fail (500) on a soft health signal — degrade
-  gracefully and attempt to run the tool, returning the real tool error if any.
+- `CommandExecutor`/`execute_command` should accept command **lists** (safe
+  mode, `shell=False`) as well as strings, per its own docstring. With that,
+  the tool wrappers and `/health` work and `tools_status` reports `true`.
 
 **Suggested fix**
-- Fix tool detection to use `shutil.which(<tool>)` / `PATH` lookup instead of
-  whatever heuristic currently returns `false`.
-- Decouple `HEALTHCHECK` reporting from request handling so a health-signal
-  miss can't turn a valid request into a 500.
+- In `CommandExecutor.execute()`, branch on type: strings → `shell=True`;
+  lists/tuples → `subprocess.Popen([str(c) for c in cmd], shell=False)`.
+- Remove the dead `cmd_args = shlex.split(self.command)` line.
 
 **Workaround**
-Route all tools through `execute_command` invoking the raw binary. (This repo has
-standardized on that approach; see the TOOLING DIRECTIVE in `AGENTS.md`.)
+Route all tools through `execute_command` invoking the raw binary. (This repo
+previously standardized on that approach; see the TOOLING DIRECTIVE in
+`AGENTS.md`.) This repo now ships a patched `docker/server.py` that fixes the
+wrappers directly — see [`docs/fix-commandexecutor.md`](fix-commandexecutor.md).
