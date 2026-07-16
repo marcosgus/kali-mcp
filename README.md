@@ -64,6 +64,8 @@ Luego conectá tu cliente MCP apuntando a `http://localhost:666/mcp` (ver uso ab
 
 ## Uso
 
+> Guía rápida paso a paso para ejecutarlo después de instalar: [`docs/como-ejecutar.md`](docs/como-ejecutar.md).
+
 ### Con Ollama Cloud + `ollmcp` (setup del autor)
 Ver guía completa: [`docs/uso-ollama.md`](docs/uso-ollama.md). Resumen:
 
