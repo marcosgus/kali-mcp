@@ -51,7 +51,7 @@ If the target is a local network range:
 - **Port Statistics**: Most common open ports across the range
 - **Service Map**: Grouped by service type (web servers, SSH, databases, etc.)
 - **High-Value Targets**: Hosts with many open ports or critical services
-- **Recommended Next Steps**: Which hosts to audit with /project:audit or /project:pentest
+- **Recommended Next Steps**: Which hosts to audit with /project:kali-audit or /project:kali-pentest
 
 ## Session Persistence
 

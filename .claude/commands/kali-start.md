@@ -13,11 +13,11 @@ Parse the target(s) from the arguments. Multiple targets can be comma-separated.
 
 Use `AskUserQuestion` to ask:
 **"Select the type of engagement:"** with options:
-1. **Full Pentest** — Complete penetration test with maximum parallelism (7+ sub-agents). Use `/project:pentest`.
-2. **Security Audit** — Per-service audit with sub-agent per port. Use `/project:audit`.
-3. **Reconnaissance Only** — Passive recon with no exploitation. Use `/project:recon`.
-4. **Network Discovery** — Host enumeration across a network range. Use `/project:network-discovery`.
-5. **Web Application Audit** — Focused web application security testing. Use `/project:web-audit`.
+1. **Full Pentest** — Complete penetration test with maximum parallelism (7+ sub-agents). Use `/project:kali-pentest`.
+2. **Security Audit** — Per-service audit with sub-agent per port. Use `/project:kali-audit`.
+3. **Reconnaissance Only** — Passive recon with no exploitation. Use `/project:kali-recon`.
+4. **Network Discovery** — Host enumeration across a network range. Use `/project:kali-network-discovery`.
+5. **Web Application Audit** — Focused web application security testing. Use `/project:kali-web-audit`.
 
 ## Step 3: Authorization Scope
 
@@ -65,7 +65,7 @@ Use the `Write` tool to create `sessions/<dir>/session.md`:
 _None yet — waiting for scan commands._
 
 ## Summary
-_Session in progress. Run `/project:finish` when done to generate the final report._
+_Session in progress. Run `/project:kali-finish` when done to generate the final report._
 ```
 
 ### targets.md
@@ -100,10 +100,10 @@ Scope:     <authorization scope>
 Directory: sessions/<dir>/
 
 Next steps:
-  /project:pentest <target>    — Full pentest with sub-agents
-  /project:audit <target>      — Per-service audit
-  /project:recon <target>      — Passive reconnaissance
-  /project:finish              — Finalize and generate report
+  /project:kali-pentest <target>    — Full pentest with sub-agents
+  /project:kali-audit <target>      — Per-service audit
+  /project:kali-recon <target>      — Passive reconnaissance
+  /project:kali-finish              — Finalize and generate report
 ```
 
 IMPORTANT: Remember the session directory path. All subsequent commands in this conversation should save their outputs to this session's `assets/` folder.

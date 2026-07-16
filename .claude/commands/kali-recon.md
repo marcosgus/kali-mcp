@@ -21,7 +21,7 @@ After completing all scans, provide a structured summary with:
 - **Potential attack vectors**: Prioritized list of findings ranked by severity
 - **Recommended next steps**: Suggested follow-up actions for each finding
 
-To run a deeper audit with brute force and exploitation, use `/project:audit` instead.
+To run a deeper audit with brute force and exploitation, use `/project:kali-audit` instead.
 
 ## Session Persistence
 

@@ -35,7 +35,7 @@ You are an **OSINT specialist**. Gather as much publicly available information a
 - **Email Addresses**: Harvested emails and patterns
 - **Subdomains**: All discovered subdomains with IPs
 - **Attack Surface Summary**: Key findings and potential entry points
-- **Recommended Next Steps**: Follow-up scans (/project:vuln-scan, /project:web-audit, etc.)
+- **Recommended Next Steps**: Follow-up scans (/project:kali-vuln-scan, /project:kali-web-audit, etc.)
 
 ## Session Persistence
 

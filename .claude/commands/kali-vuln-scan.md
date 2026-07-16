@@ -20,7 +20,7 @@ Vulnerability report:
 - **Remediation Plan**: Prioritized fix recommendations
 - **Risk Rating**: Overall assessment (Critical/High/Medium/Low)
 
-Note: This skill identifies but does NOT exploit vulnerabilities. For exploitation testing, use `/project:exploit` (requires explicit authorization).
+Note: This skill identifies but does NOT exploit vulnerabilities. For exploitation testing, use `/project:kali-exploit` (requires explicit authorization).
 
 ## Session Persistence
 

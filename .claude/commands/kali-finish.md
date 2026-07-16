@@ -10,7 +10,7 @@ ls -td sessions/*/ 2>/dev/null | head -1
 ```
 
 If no session directory exists, inform the user:
-**"No active session found. Use `/project:start <target>` to initialize one first."**
+**"No active session found. Use `/project:kali-start <target>` to initialize one first."**
 Then stop.
 
 Read `sessions/<dir>/session.md` and `sessions/<dir>/targets.md` to understand the session context.

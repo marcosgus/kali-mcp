@@ -16,7 +16,7 @@ Before executing, use `AskUserQuestion` to ask the user:
 2. **Yes, but use small wordlist only** — Limit to top 50 common passwords to minimize impact.
 3. **Cancel** — Do not proceed.
 
-If the user selects "Cancel", stop immediately and suggest using `/project:recon` for passive analysis instead.
+If the user selects "Cancel", stop immediately and suggest using `/project:kali-recon` for passive analysis instead.
 
 ## Workflow
 

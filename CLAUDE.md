@@ -7,54 +7,54 @@ Read `AGENTS.md` for the full project context: available MCP tools, authorizatio
 ### Session Management
 | Command | Description |
 |---------|-------------|
-| `/kali-start <target>` | Initialize a session: select target, engagement type, scope. Creates session directory |
-| `/kali-resume [target]` | Resume a previous session (in progress or completed). Lists available sessions |
-| `/kali-finish` | Finalize session: double-check sub-agents, compile findings, generate report |
+| `/project:kali-start <target>` | Initialize a session: select target, engagement type, scope. Creates session directory |
+| `/project:kali-resume [target]` | Resume a previous session (in progress or completed). Lists available sessions |
+| `/project:kali-finish` | Finalize session: double-check sub-agents, compile findings, generate report |
 
 ### Orchestrators (launch parallel sub-agents)
 | Command | Description |
 |---------|-------------|
-| `/kali-audit <target>` | Full audit: nmap discovery, sub-agent per port, consolidated report |
-| `/kali-pentest <target>` | Full pentest with max parallelism: 7+ specialized sub-agents per web target |
-| `/kali-network-discovery <range>` | Host discovery, sub-agent per live host |
+| `/project:kali-audit <target>` | Full audit: nmap discovery, sub-agent per port, consolidated report |
+| `/project:kali-pentest <target>` | Full pentest with max parallelism: 7+ specialized sub-agents per web target |
+| `/project:kali-network-discovery <range>` | Host discovery, sub-agent per live host |
 
 ### Standalone Scans
 | Command | Description |
 |---------|-------------|
-| `/kali-recon <target>` | Passive recon (nmap + gobuster + nikto) |
-| `/kali-vuln-scan <target>` | Vulnerability identification with nmap scripts |
-| `/kali-web-audit <url>` | Web application audit |
-| `/kali-wp-audit <url>` | WordPress audit |
-| `/kali-brute <target> <service>` | Brute force with hydra/john |
-| `/kali-exploit <target> <vuln>` | Exploit a specific vulnerability |
+| `/project:kali-recon <target>` | Passive recon (nmap + gobuster + nikto) |
+| `/project:kali-vuln-scan <target>` | Vulnerability identification with nmap scripts |
+| `/project:kali-web-audit <url>` | Web application audit |
+| `/project:kali-wp-audit <url>` | WordPress audit |
+| `/project:kali-brute <target> <service>` | Brute force with hydra/john |
+| `/project:kali-exploit <target> <vuln>` | Exploit a specific vulnerability |
 
 ### OSINT & Reconnaissance
 | Command | Description |
 |---------|-------------|
-| `/kali-osint <target>` | OSINT recon: whois, whatweb, theHarvester, fierce, dnsrecon, wafw00f |
-| `/kali-subdomain-enum <domain>` | Subdomain enumeration: sublist3r, amass, fierce, dnsrecon, ffuf vhost |
-| `/kali-waf-detect <url>` | WAF/IPS detection: wafw00f, nmap scripts, header analysis |
+| `/project:kali-osint <target>` | OSINT recon: whois, whatweb, theHarvester, fierce, dnsrecon, wafw00f |
+| `/project:kali-subdomain-enum <domain>` | Subdomain enumeration: sublist3r, amass, fierce, dnsrecon, ffuf vhost |
+| `/project:kali-waf-detect <url>` | WAF/IPS detection: wafw00f, nmap scripts, header analysis |
 
 ### Advanced Scanning
 | Command | Description |
 |---------|-------------|
-| `/kali-mass-scan <range>` | Fast mass port scanning with masscan + arp-scan |
-| `/kali-web-fuzz <url>` | Web fuzzing: ffuf, wfuzz, arjun, nuclei, commix |
-| `/kali-ad-audit <target>` | Active Directory audit: crackmapexec, impacket, enum4linux, LDAP |
+| `/project:kali-mass-scan <range>` | Fast mass port scanning with masscan + arp-scan |
+| `/project:kali-web-fuzz <url>` | Web fuzzing: ffuf, wfuzz, arjun, nuclei, commix |
+| `/project:kali-ad-audit <target>` | Active Directory audit: crackmapexec, impacket, enum4linux, LDAP |
 
 ### Analysis & Forensics
 | Command | Description |
 |---------|-------------|
-| `/kali-sniff <target>` | Network sniffing: tcpdump capture + tshark analysis |
-| `/kali-forensics <file>` | Digital forensics: binwalk, exiftool, steghide, foremost |
-| `/kali-hash-crack <hash>` | Hash cracking: hash-identifier, john, hashcat, cewl wordlists |
+| `/project:kali-sniff <target>` | Network sniffing: tcpdump capture + tshark analysis |
+| `/project:kali-forensics <file>` | Digital forensics: binwalk, exiftool, steghide, foremost |
+| `/project:kali-hash-crack <hash>` | Hash cracking: hash-identifier, john, hashcat, cewl wordlists |
 
 ## Session System
 
 All commands persist their outputs to a session directory under `sessions/`. This enables:
 - **Traceability**: Every sub-agent saves its raw output to `sessions/<dir>/assets/`
-- **Resumability**: Sessions can be resumed across conversations with `/kali-resume`
-- **Double-check**: `/kali-finish` verifies all sub-agents completed and flags gaps
+- **Resumability**: Sessions can be resumed across conversations with `/project:kali-resume`
+- **Double-check**: `/project:kali-finish` verifies all sub-agents completed and flags gaps
 - **Consolidated reporting**: Findings are deduplicated and organized by severity
 
 ### Session Directory Structure
@@ -62,7 +62,7 @@ All commands persist their outputs to a session directory under `sessions/`. Thi
 sessions/<target>_<YYYYMMDD_HHMM>/
 ├── session.md      # Metadata: target, date, type, scope, status, timeline
 ├── targets.md      # Target list with status and findings count
-├── findings.md     # Consolidated findings by severity (generated by /kali-finish)
+├── findings.md     # Consolidated findings by severity (generated by /project:kali-finish)
 └── assets/         # Raw output from each sub-agent/command
     ├── nmap_discovery.md
     ├── service_enum_port80.md
@@ -73,16 +73,16 @@ sessions/<target>_<YYYYMMDD_HHMM>/
 
 ### Recommended Workflow
 ```
-/kali-start <target>          # 1. Initialize session and select scope
-/kali-pentest <target>        # 2. Run the pentest (or audit, recon, etc.)
-/kali-finish                  # 3. Finalize: double-check + consolidated report
+/project:kali-start <target>          # 1. Initialize session and select scope
+/project:kali-pentest <target>        # 2. Run the pentest (or audit, recon, etc.)
+/project:kali-finish                  # 3. Finalize: double-check + consolidated report
 ```
 
 To continue later:
 ```
-/kali-resume                  # List and select a previous session
-/kali-vuln-scan <target>      # Run additional scans (appended to session)
-/kali-finish                  # Re-finalize with new results
+/project:kali-resume                  # List and select a previous session
+/project:kali-vuln-scan <target>      # Run additional scans (appended to session)
+/project:kali-finish                  # Re-finalize with new results
 ```
 
 ## Sub-Agent Architecture
@@ -95,7 +95,7 @@ To continue later:
 4. **Scope injection**: Every sub-agent receives the authorization level in its prompt and respects its constraints.
 5. **Session persistence**: Every sub-agent saves its complete output to the session `assets/` folder before returning.
 
-### Sub-Agent Types for `/kali-pentest`
+### Sub-Agent Types for `/project:kali-pentest`
 
 For a web application target, the orchestrator launches up to **7 parallel sub-agents**:
 
@@ -114,11 +114,11 @@ For a web application target, the orchestrator launches up to **7 parallel sub-a
 | Sensitive File Discovery | FTP bypass, null byte, path traversal, key/log exposure | Full only |
 | AD/SMB Exploitation | impacket secretsdump, psexec, kerberoast, pass-the-hash | Full only |
 
-### Sub-Agent Types for `/kali-audit`
+### Sub-Agent Types for `/project:kali-audit`
 
 One sub-agent per discovered port/service, using the service playbooks from AGENTS.md.
 
-### Sub-Agent Types for `/kali-network-discovery`
+### Sub-Agent Types for `/project:kali-network-discovery`
 
 One sub-agent per discovered live host.
 

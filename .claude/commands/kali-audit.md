@@ -247,5 +247,5 @@ Once ALL sub-agents have returned their results, compile a **final consolidated 
 4. Update `sessions/<SESSION_DIR>/session.md`:
    - Add each sub-agent dispatched to the "Sub-Agents Dispatched" section
    - Add timeline entries for each phase completed
-   - Keep status as `IN PROGRESS` (use `/project:finish` to finalize)
+   - Keep status as `IN PROGRESS` (use `/project:kali-finish` to finalize)
 5. Print a summary of saved assets.

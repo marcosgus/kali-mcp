@@ -10,7 +10,7 @@ ls -td sessions/*/ 2>/dev/null
 ```
 
 If no sessions exist, inform the user:
-**"No sessions found. Use `/project:start <target>` to create one."**
+**"No sessions found. Use `/project:kali-start <target>` to create one."**
 Then stop.
 
 ## Step 2: Session Selection
@@ -70,15 +70,15 @@ Based on the session state, suggest what the user can do:
 ```
 Suggested next steps:
   1. Re-run missing scans for gaps detected above
-  2. Run additional scans: /project:vuln-scan <target>, /project:web-audit <target>
-  3. Finalize: /project:finish
+  2. Run additional scans: /project:kali-vuln-scan <target>, /project:kali-web-audit <target>
+  3. Finalize: /project:kali-finish
 ```
 
 **If COMPLETED:**
 ```
 This session is already finalized. You can:
   1. Run additional scans that will append to this session
-  2. Start a new session: /project:start <target>
+  2. Start a new session: /project:kali-start <target>
   3. Review findings in sessions/<dir>/findings.md
 ```
 

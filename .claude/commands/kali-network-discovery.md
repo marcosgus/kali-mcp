@@ -38,7 +38,7 @@ Present results as a network map:
 - **Network Segments**: Identified subnets
 - **Key Assets**: Servers, network devices, high-value targets
 - **Attack Surface Summary**: Total exposed services
-- **Recommended Targets**: Prioritized list for further testing with `/project:audit`
+- **Recommended Targets**: Prioritized list for further testing with `/project:kali-audit`
 
 ## Session Persistence
 
