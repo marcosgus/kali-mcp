@@ -68,3 +68,38 @@ Tools intrusivas (sqlmap, hydra, metasploit) → confirmar siempre; solo targets
 | El modelo no llama tools | confirmar `ollama show glm-5.2:cloud` → `tools`; en ollmcp `/tools` |
 | Tools dan 500 / `server_health` false | ya parcheado en este repo (ver `docs/fix-commandexecutor.md`); rebuild con `./init.sh` |
 | Cloud auth error | `ollama signin` o verificar `OLLAMA_API_KEY`/host |
+
+## Prueba reproducible (verificación end-to-end)
+
+Este repo incluye `examples/drive_kali_mcp.py`: un harness mínimo (solo stdlib de
+Python) que replica el loop de `ollmcp` sin TUI, para verificar que
+`glm-5.2:cloud` conduce las tools de kali-mcp.
+
+### Cómo correrlo
+```bash
+# 1) kali-mcp arriba
+./init.sh
+# 2) Ollama Cloud + modelo
+ollama signin && ollama pull glm-5.2:cloud
+# 3) prueba
+python3 examples/drive_kali_mcp.py
+```
+
+### Resultado verificado (build de este repo, glm-5.2:cloud)
+```
+[+] kali-mcp tools: 12  (nmap_scan, gobuster_scan, dirb_scan, nikto_scan, ...)
+
+[user] Chequeá el estado del servidor kali-mcp usando la tool server_health ...
+[tool_call] server_health({})
+[tool_result] {"all_essential_tools_available": true, "tools_status": {"dirb":true,"gobuster":true,"nikto":true,"nmap":true}, ...}
+[final] ...todas las herramientas esenciales verificadas... (tabla con Nmap/Gobuster/Dirb/Nikto ✅)
+
+[user] Escaneá los puertos de 127.0.0.1 limitado a 5000 (-sT). Usá nmap_scan.
+[tool_call] nmap_scan({'target': '127.0.0.1', 'scan_type': '-sT', 'ports': '1-5000'})
+[tool_result] {"return_code":0,"stdout":"...5000/tcp open..."}
+[final] ...resumen del escaneo nmap...
+```
+
+Esto confirma el stack completo: **Ollama Cloud `glm-5.2:cloud` → kali-mcp (Docker,
+parcheado) → tools reales**. Para uso interactivo con confirmación humana por cada
+tool, usá `ollmcp` (sección anterior, `/hil`).
